@@ -6,6 +6,15 @@ __pycache__/
 # C extensions
 *.so
 
+# Local document workspaces
+documentos_em_elaboracao/
+documentos_finalizados/
+materiais_de_consulta/
+
+# Local editor/agent state
+.idea/
+.codex/
+
 # Distribution / packaging
 .Python
 build/

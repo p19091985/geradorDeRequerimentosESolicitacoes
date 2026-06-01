@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Template ABNT — Monografia</title>
+  <style>
+    @page {
+      size: A4;
+      margin: 3cm 2cm 2cm 3cm;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      background: #d9d9d9;
+      color: #000;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 12pt;
+    }
+
+    body {
+      margin: 0;
+      color: #000;
+      counter-reset: page;
+    }
+
+    .page {
+      width: 210mm;
+      min-height: 297mm;
+      margin: 12mm auto;
+      padding: 3cm 2cm 2cm 3cm;
+      background: #fff;
+      box-shadow: 0 2mm 8mm rgba(0, 0, 0, 0.18);
+    }
+
+    .cover,
+    .title-page,
+    .dedication,
+    .toc {
+      display: flex;
+      flex-direction: column;
+      text-align: center;
+      page-break-after: always;
+    }
+
+    .cover {
+      justify-content: space-between;
+      text-transform: uppercase;
+      font-weight: bold;
+    }
+
+    .cover__top,
+    .cover__bottom {
+      line-height: 1.5;
+    }
+
+    .cover__title {
+      margin: auto 0;
+      font-size: 12pt;
+      line-height: 1.5;
+    }
+
+    .title-page {
+      position: relative;
+      display: block;
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+
+    .title-page__author {
+      text-align: center;
+    }
+
+    .title-page__title {
+      margin-top: 7cm;
+      text-align: center;
+      font-size: 12pt;
+      line-height: 1.5;
+    }
+
+    .title-page__note {
+      width: 8cm;
+      margin: 6.5cm 0 0 auto;
+      font-weight: normal;
+      line-height: 1.5;
+      text-align: justify;
+      text-indent: 0;
+      text-transform: none;
+    }
+
+    .title-page__advisor {
+      width: 8cm;
+      margin: 0.6cm 0 0 auto;
+      font-weight: normal;
+      line-height: 1.5;
+      text-align: left;
+      text-transform: none;
+    }
+
+    .title-page__bottom {
+      position: absolute;
+      right: 0;
+      bottom: 1.2cm;
+      left: 0;
+      text-align: center;
+    }
+
+    .dedication {
+      justify-content: center;
+      align-items: center;
+      gap: 0.8cm;
+    }
+
+    .dedication h1 {
+      margin: 0;
+      text-align: center;
+    }
+
+    .dedication__text {
+      width: 11cm;
+      margin: 0;
+      font-style: italic;
+      line-height: 1.5;
+      text-align: justify;
+      text-indent: 0;
+    }
+
+    .toc {
+      text-align: left;
+    }
+
+    .toc h1 {
+      margin: 0 0 2cm;
+      text-align: center;
+      font-size: 12pt;
+      text-transform: uppercase;
+    }
+
+    .toc ol {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      line-height: 1.5;
+    }
+
+    .toc li {
+      display: flex;
+      gap: 0.25cm;
+      margin-bottom: 0.18cm;
+      text-transform: uppercase;
+    }
+
+    .toc li::after {
+      content: "";
+      flex: 1;
+      border-bottom: 1px dotted #000;
+      transform: translateY(-0.18cm);
+    }
+
+    .toc a {
+      color: #000;
+      text-decoration: none;
+    }
+
+    .toc .page-number {
+      order: 2;
+    }
+
+    main {
+      margin: 0;
+    }
+
+    .content-page {
+      text-align: justify;
+      line-height: 1.5;
+      page-break-after: always;
+    }
+
+    main .content-page:last-child {
+      page-break-after: auto;
+    }
+
+    h1,
+    h2,
+    h3 {
+      break-after: avoid;
+      font-size: 12pt;
+      line-height: 1.5;
+      margin: 0 0 12pt;
+      text-align: left;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    h2 {
+      margin-top: 18pt;
+    }
+
+    h3 {
+      margin-top: 12pt;
+      text-transform: none;
+    }
+
+    p {
+      margin: 0 0 12pt;
+      text-indent: 1.25cm;
+    }
+
+    .reference {
+      text-indent: 0;
+    }
+
+    code {
+      font-family: "Courier New", Courier, monospace;
+      font-size: 10pt;
+    }
+
+    pre {
+      margin: 0 0 12pt;
+      padding: 8pt;
+      border: 1px solid #000;
+      white-space: pre-wrap;
+    }
+
+    table {
+      width: 100%;
+      margin: 12pt 0 18pt;
+      border-collapse: collapse;
+      break-inside: avoid;
+      font-size: 10pt;
+      line-height: 1.25;
+    }
+
+    th,
+    td {
+      padding: 5pt;
+      border: 1px solid #000;
+      vertical-align: top;
+      text-align: left;
+    }
+
+    th {
+      font-weight: bold;
+    }
+
+    .obs {
+      margin: 12pt 0 18pt;
+      padding: 8pt 10pt;
+      border: 1px solid #000;
+      line-height: 1.5;
+      text-align: justify;
+    }
+
+    .obs p,
+    .obs {
+      text-indent: 0;
+    }
+
+    @media print {
+      html,
+      body {
+        background: #fff;
+      }
+
+      .page {
+        width: auto;
+        min-height: auto;
+        margin: 0;
+        padding: 0;
+        box-shadow: none;
+      }
+
+      .cover,
+      .title-page,
+      .dedication,
+      .toc {
+        min-height: 242mm;
+      }
+
+      a {
+        color: #000;
+        text-decoration: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<section class="page cover">
+  <div class="cover__top">
+    [NOME DA INSTITUIÇÃO]<br>
+    [NOME DO CURSO]<br>
+    [DEPARTAMENTO, DISCIPLINA OU LINHA DE PESQUISA]
+  </div>
+
+  <div class="cover__title">
+    [NOME DO AUTOR]<br><br>
+    [TÍTULO DA MONOGRAFIA: SUBTÍTULO, SE HOUVER]
+  </div>
+
+  <div class="cover__bottom">
+    [CIDADE/UF]<br>
+    [ANO]
+  </div>
+</section>
+
+<section class="page title-page">
+  <div class="title-page__author">[NOME DO AUTOR]</div>
+
+  <div class="title-page__title">
+    [TÍTULO DA MONOGRAFIA: SUBTÍTULO, SE HOUVER]
+  </div>
+
+  <p class="title-page__note">
+    Monografia apresentada ao [nome do curso] da [nome da instituição], como requisito
+    [parcial ou total] para obtenção do título de [grau ou formação]. Área de concentração:
+    [área de concentração].
+  </p>
+
+  <p class="title-page__advisor">
+    Orientador(a): [Nome do(a) orientador(a)].<br>
+    Coorientador(a): [Nome do(a) coorientador(a), se houver].
+  </p>
+
+  <div class="title-page__bottom">
+    [CIDADE/UF]<br>
+    [ANO]
+  </div>
+</section>
+
+<section class="page dedication">
+  <h1>Dedicatória</h1>
+
+  <p class="dedication__text">
+    [Texto opcional de dedicatória. Remova esta página caso ela não seja necessária
+    para a versão final do trabalho.]
+  </p>
+</section>
+
+<nav class="page toc" aria-label="Sumário">
+  <h1>Sumário</h1>
+  <ol>
+    <li><a href="#introducao">1. Introdução</a><span class="page-number">5</span></li>
+    <li><a href="#fundamentacao-teorica">2. Fundamentação teórica</a><span class="page-number">6</span></li>
+    <li><a href="#metodologia">3. Metodologia</a><span class="page-number">8</span></li>
+    <li><a href="#desenvolvimento">4. Desenvolvimento e análise</a><span class="page-number">9</span></li>
+    <li><a href="#resultados-discussao">5. Resultados e discussão</a><span class="page-number">11</span></li>
+    <li><a href="#consideracoes-finais">6. Considerações finais</a><span class="page-number">12</span></li>
+    <li><a href="#referencias">Referências</a><span class="page-number">13</span></li>
+  </ol>
+</nav>
+
+<main>
+
+<section class="page content-page">
+
+<h1>[TÍTULO DA MONOGRAFIA]</h1>
+
+<h2 id="introducao">1. Introdução</h2>
+
+<p>
+  [Apresente o tema da monografia, contextualizando o assunto e indicando sua relevância
+  acadêmica, social, técnica ou profissional. Este parágrafo deve situar o leitor no
+  problema investigado.]
+</p>
+
+<p>
+  [Descreva o problema de pesquisa em linguagem clara. Explique qual questão orienta o
+  trabalho e por que ela merece ser estudada.]
+</p>
+
+<h3>1.1 Objetivo geral</h3>
+
+<p>
+  [Indique, em uma frase objetiva, o propósito central da monografia.]
+</p>
+
+<h3>1.2 Objetivos específicos</h3>
+
+<table>
+  <tr><th>Item</th><th>Objetivo específico</th></tr>
+  <tr><td>1</td><td>[Descrever o primeiro objetivo específico.]</td></tr>
+  <tr><td>2</td><td>[Descrever o segundo objetivo específico.]</td></tr>
+  <tr><td>3</td><td>[Descrever o terceiro objetivo específico.]</td></tr>
+</table>
+
+<h3>1.3 Justificativa</h3>
+
+<p>
+  [Explique a importância do tema e os motivos que justificam a realização da pesquisa.
+  Relacione a justificativa com lacunas teóricas, necessidades práticas ou contribuições
+  esperadas.]
+</p>
+
+</section>
+
+<section class="page content-page">
+
+<h2 id="fundamentacao-teorica">2. Fundamentação teórica</h2>
+
+<p>
+  [Apresente os conceitos, autores e estudos que sustentam a pesquisa. Organize esta seção
+  do geral para o específico, estabelecendo relação direta entre a literatura revisada e o
+  problema de pesquisa.]
+</p>
+
+<h3>2.1 Conceitos centrais</h3>
+
+<p>
+  [Defina os principais conceitos utilizados na monografia. Inclua citações conforme o padrão
+  exigido pela instituição, por exemplo: (SOBRENOME, ano).]
+</p>
+
+<h3>2.2 Trabalhos relacionados</h3>
+
+<p>
+  [Compare pesquisas, artigos, livros ou documentos relevantes. Destaque aproximações,
+  diferenças, limites e contribuições de cada referência para o seu estudo.]
+</p>
+
+<table>
+  <tr><th>Autor(es)</th><th>Ano</th><th>Contribuição para a pesquisa</th></tr>
+  <tr><td>[Sobrenome]</td><td>[Ano]</td><td>[Síntese da contribuição.]</td></tr>
+  <tr><td>[Sobrenome]</td><td>[Ano]</td><td>[Síntese da contribuição.]</td></tr>
+  <tr><td>[Sobrenome]</td><td>[Ano]</td><td>[Síntese da contribuição.]</td></tr>
+</table>
+
+</section>
+
+<section class="page content-page">
+
+<h2 id="metodologia">3. Metodologia</h2>
+
+<p>
+  [Descreva o tipo de pesquisa, a abordagem metodológica, os procedimentos utilizados e os
+  critérios adotados para coleta e análise dos dados.]
+</p>
+
+<h3>3.1 Caracterização da pesquisa</h3>
+
+<p>
+  [Informe se a pesquisa é bibliográfica, documental, exploratória, descritiva, experimental,
+  estudo de caso, pesquisa de campo ou outra classificação aplicável.]
+</p>
+
+<h3>3.2 Procedimentos de coleta</h3>
+
+<p>
+  [Explique quais dados, documentos, amostras, participantes, sistemas ou materiais foram
+  utilizados. Informe também o período, os instrumentos e os critérios de seleção.]
+</p>
+
+<h3>3.3 Procedimentos de análise</h3>
+
+<p>
+  [Explique como os dados foram interpretados. Indique categorias de análise, ferramentas,
+  métricas, técnicas estatísticas, protocolos ou etapas de avaliação.]
+</p>
+
+<div class="obs">
+  Substitua os campos entre colchetes pelos dados reais do trabalho. Ajuste títulos, seções,
+  paginação e referências conforme as normas da sua instituição.
+</div>
+
+</section>
+
+<section class="page content-page">
+
+<h2 id="desenvolvimento">4. Desenvolvimento e análise</h2>
+
+<p>
+  [Desenvolva a análise principal da monografia. Esta seção pode apresentar estudo de caso,
+  descrição do objeto pesquisado, implementação, comparação teórica, análise documental ou
+  discussão técnica, conforme a natureza do trabalho.]
+</p>
+
+<h3>4.1 Descrição do objeto de estudo</h3>
+
+<p>
+  [Descreva o objeto, contexto, instituição, tecnologia, processo, comunidade, documento ou
+  fenômeno analisado.]
+</p>
+
+<h3>4.2 Categorias ou etapas de análise</h3>
+
+<table>
+  <tr><th>Categoria</th><th>Descrição</th><th>Critério de análise</th></tr>
+  <tr><td>[Categoria 1]</td><td>[Descrição.]</td><td>[Critério utilizado.]</td></tr>
+  <tr><td>[Categoria 2]</td><td>[Descrição.]</td><td>[Critério utilizado.]</td></tr>
+  <tr><td>[Categoria 3]</td><td>[Descrição.]</td><td>[Critério utilizado.]</td></tr>
+</table>
+
+<p>
+  [Interprete os dados apresentados na tabela, relacionando-os com o referencial teórico e
+  com os objetivos definidos na introdução.]
+</p>
+
+</section>
+
+<section class="page content-page">
+
+<h2 id="resultados-discussao">5. Resultados e discussão</h2>
+
+<p>
+  [Apresente os principais resultados obtidos. Evite apenas repetir dados: explique o que os
+  resultados significam, quais padrões foram observados e como eles respondem ao problema de
+  pesquisa.]
+</p>
+
+<table>
+  <tr><th>Resultado</th><th>Evidência</th><th>Interpretação</th></tr>
+  <tr><td>[Resultado 1]</td><td>[Dado, documento ou observação.]</td><td>[Análise.]</td></tr>
+  <tr><td>[Resultado 2]</td><td>[Dado, documento ou observação.]</td><td>[Análise.]</td></tr>
+  <tr><td>[Resultado 3]</td><td>[Dado, documento ou observação.]</td><td>[Análise.]</td></tr>
+</table>
+
+<p>
+  [Discuta limitações da pesquisa, possíveis vieses, dificuldades encontradas e pontos que
+  podem ser aprofundados em estudos futuros.]
+</p>
+
+</section>
+
+<section class="page content-page">
+
+<h2 id="consideracoes-finais">6. Considerações finais</h2>
+
+<p>
+  [Retome o objetivo geral e apresente, de forma sintética, como ele foi alcançado. Relacione
+  as conclusões aos resultados discutidos anteriormente.]
+</p>
+
+<p>
+  [Indique as principais contribuições da monografia e registre recomendações práticas,
+  acadêmicas ou técnicas decorrentes do estudo.]
+</p>
+
+<p>
+  [Sugira possibilidades de continuidade da pesquisa, novos recortes, novas fontes de dados
+  ou melhorias metodológicas.]
+</p>
+
+</section>
+
+<section class="page content-page">
+
+<h2 id="referencias">Referências</h2>
+
+<p class="reference">
+  SOBRENOME, Nome. <strong>Título do livro em negrito</strong>: subtítulo. Edição. Cidade:
+  Editora, ano.
+</p>
+
+<p class="reference">
+  SOBRENOME, Nome; SOBRENOME, Nome. Título do artigo. <strong>Nome do periódico</strong>,
+  cidade, volume, número, página inicial-página final, ano.
+</p>
+
+<p class="reference">
+  INSTITUIÇÃO OU AUTOR. <strong>Título do documento</strong>. Cidade: responsável pela
+  publicação, ano. Disponível em: [link]. Acesso em: [dia mês ano].
+</p>
+
+</section>
+
+</main>
+
+</body>
+</html>

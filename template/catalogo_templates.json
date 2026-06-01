@@ -1,0 +1,26 @@
+{
+  "templates": [
+    {
+      "id": "solicitacao",
+      "nome": "Solicitacao Administrativa",
+      "categoria": "Administrativo",
+      "arquivo": "template-solicitacao.html",
+      "descricao": "Modelo base para requerimentos e solicitacoes administrativas.",
+      "padrao": true
+    },
+    {
+      "id": "juridico",
+      "nome": "Documento Juridico",
+      "categoria": "Juridico",
+      "arquivo": "template-juridico.html",
+      "descricao": "Modelo para fundamentacao juridica administrativa."
+    },
+    {
+      "id": "abnt-monografia",
+      "nome": "Template ABNT - Monografia",
+      "categoria": "Academico",
+      "arquivo": "template-abnt-monografia.html",
+      "descricao": "Modelo generico com capa, folha de rosto, sumario e estrutura de monografia ABNT."
+    }
+  ]
+}

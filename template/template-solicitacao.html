@@ -1,0 +1,967 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Template de Solicitação Administrativa — Modelo Reutilizável</title>
+<meta name="description" content="Modelo reutilizável e anônimo para solicitações administrativas simples, com estrutura visual pronta para adaptação.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════════════
+   DESIGN SYSTEM — Custom Properties  (Estado da Arte)
+   ═══════════════════════════════════════════════════ */
+:root {
+  /* Paleta primária — azul-petróleo refinado */
+  --azul:             #2B8FAF;
+  --azul-medio:       #247A97;
+  --azul-escuro:      #1B6A84;
+  --azul-profundo:    #143A4D;
+
+  /* Paleta secundária — cobre / ouro-velho */
+  --cobre:            #C08550;
+  --cobre-escuro:     #8A5D38;
+  --cobre-claro:      #D4A06A;
+  --cobre-label-bg:   linear-gradient(135deg, #F8EDE2 0%, #FDF5EE 100%);
+  --cobre-label-bg-flat: #F6ECE3;
+
+  /* Texto */
+  --texto:            #1E2D36;
+  --texto-suave:      #4D6068;
+  --texto-label:      #5F7580;
+
+  /* Superfícies */
+  --fundo:            #EFF4F8;
+  --card:             #FBFCFD;
+  --card-alt:         #F6FAFE;
+  --card-borda:       #CBDAE3;
+  --borda-sutil:      #D8E5EC;
+
+  /* Pill */
+  --pill-bg:          #EEF6FA;
+  --pill-borda:       #C4D9E4;
+  --pill-texto:       #1D5B73;
+
+  /* Tipografia — Google Fonts premium */
+  --fonte-serif:      "Source Serif 4", "Georgia", serif;
+  --fonte-sans:       "Inter", "Arial", sans-serif;
+
+  /* Espaçamento base */
+  --gap-sm:           6px;
+  --gap-md:           12px;
+  --gap-lg:           18px;
+  --gap-xl:           24px;
+  --radius:           3px;
+
+  /* Sombras */
+  --shadow-card:      0 1px 2px rgba(20,58,77,.04),
+                      0 4px 14px rgba(20,58,77,.035);
+  --shadow-elevated:  0 2px 6px rgba(20,58,77,.06),
+                      0 8px 24px rgba(20,58,77,.05);
+  --shadow-featured:  0 2px 8px rgba(27,106,132,.08),
+                      0 12px 32px rgba(20,58,77,.055);
+  --shadow-glow:      0 0 0 1px rgba(43,143,175,.08),
+                      0 4px 16px rgba(43,143,175,.07);
+}
+
+/* ═══════════════════════════════════════════════════
+   ANIMATIONS
+   ═══════════════════════════════════════════════════ */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes subtleGlow {
+  0%, 100% { box-shadow: var(--shadow-featured); }
+  50%      { box-shadow: var(--shadow-featured), 0 0 20px rgba(43,143,175,.06); }
+}
+
+/* ═══════════════════════════════════════════════════
+   RESET & BASE
+   ═══════════════════════════════════════════════════ */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--fundo);
+  font-family: var(--fonte-serif);
+  font-size: 12pt;
+  color: var(--texto);
+  line-height: 1.32;
+  word-wrap: break-word;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* ═══════════════════════════════════════════════════
+   LAYOUT — Document Container
+   ═══════════════════════════════════════════════════ */
+.document {
+  max-width: 100%;
+  background: white;
+  border: 1px solid var(--card-borda);
+  box-shadow: 0 1px 3px rgba(0,0,0,.04), 0 8px 30px rgba(0,0,0,.03);
+  animation: fadeInUp .5s ease-out both;
+}
+
+/* ═══════════════════════════════════════════════════
+   HEADER — Top reference bar
+   ═══════════════════════════════════════════════════ */
+.ref-bar {
+  background: linear-gradient(135deg, var(--azul) 0%, var(--azul-medio) 100%);
+  border-bottom: 2px solid var(--cobre);
+  padding: 3pt 14pt;
+  text-align: right;
+  line-height: 18pt;
+  position: relative;
+}
+
+.ref-bar::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, var(--cobre-claro) 30%, var(--cobre) 50%, var(--cobre-claro) 70%, transparent 100%);
+}
+
+.ref-bar__text {
+  font-size: 8.5pt;
+  font-family: var(--fonte-sans);
+  color: rgba(255,255,255,.95);
+  text-transform: uppercase;
+  letter-spacing: 1pt;
+  font-weight: 600;
+}
+
+/* ═══════════════════════════════════════════════════
+   HERO — Title area (64% / 36% split)
+   ═══════════════════════════════════════════════════ */
+.hero {
+  display: grid;
+  grid-template-columns: 64fr 36fr;
+  gap: 0 14pt;
+  padding: 22pt var(--gap-xl) 22pt var(--gap-xl);
+  border-bottom: 1px solid var(--card-borda);
+  animation: fadeInUp .55s ease-out .05s both;
+}
+
+.hero__main {
+  padding-right: 4pt;
+}
+
+.hero__title-block {
+  padding-bottom: 13pt;
+  border-bottom: 1px solid var(--borda-sutil);
+  position: relative;
+}
+
+.hero__title-block::after {
+  content: "";
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 80pt;
+  height: 2px;
+  background: linear-gradient(90deg, var(--cobre) 0%, var(--cobre-claro) 60%, transparent 100%);
+  border-radius: 1px;
+}
+
+.kicker {
+  font-size: 9pt;
+  font-family: var(--fonte-sans);
+  color: var(--cobre);
+  text-transform: uppercase;
+  letter-spacing: 1.4pt;
+  font-weight: 700;
+  margin-bottom: 8pt;
+  position: relative;
+  padding-left: 14pt;
+}
+
+.kicker::before {
+  content: "◆";
+  position: absolute;
+  left: 0;
+  top: 0;
+  font-size: 7pt;
+  color: var(--cobre-claro);
+}
+
+.hero__title {
+  font-size: 29pt;
+  line-height: 1.14;
+  font-family: var(--fonte-serif);
+  color: var(--azul-escuro);
+  font-weight: 700;
+  margin-bottom: 6pt;
+  letter-spacing: -.2pt;
+}
+
+.hero__subtitle {
+  font-size: 12.5pt;
+  font-family: var(--fonte-serif);
+  color: #4D6068;
+  line-height: 1.42;
+  margin-top: 11pt;
+  font-weight: 400;
+}
+
+/* Hero — Feature Panels (Instituição / Eixo) */
+.hero__panels {
+  display: grid;
+  grid-template-columns: 48fr 52fr;
+  gap: 0 16pt;
+  margin-top: 18pt;
+}
+
+.panel {
+  border: 1px solid rgba(0,0,0,.06);
+  padding: 13pt 14pt;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-card);
+  transition: box-shadow .25s ease, transform .25s ease;
+}
+
+.panel:hover {
+  box-shadow: var(--shadow-elevated);
+  transform: translateY(-1px);
+}
+
+.panel--azul {
+  border-left: 3pt solid var(--azul);
+  background: linear-gradient(180deg, #FCFDFE 0%, #F7FBFD 100%);
+}
+
+.panel--cobre {
+  border-left: 3pt solid var(--cobre);
+  background: linear-gradient(180deg, #FEFDFC 0%, #FDF9F5 100%);
+}
+
+.panel__kicker {
+  font-size: 8pt;
+  font-family: var(--fonte-sans);
+  color: var(--cobre-escuro);
+  text-transform: uppercase;
+  letter-spacing: 1.2pt;
+  font-weight: 700;
+  margin-bottom: 5pt;
+}
+
+.panel__accent {
+  font-size: 20pt;
+  font-family: var(--fonte-serif);
+  color: var(--azul-escuro);
+  font-weight: 700;
+  margin-bottom: 5pt;
+  line-height: 1.15;
+}
+
+.panel__copy {
+  font-size: 10.5pt;
+  font-family: var(--fonte-serif);
+  color: var(--texto-suave);
+  line-height: 1.38;
+}
+
+/* Hero — Reference Sidebar */
+.hero__sidebar {
+  padding-left: 0;
+}
+
+.ref-panel {
+  border: 1px solid rgba(0,0,0,.06);
+  border-top: 3.5pt solid var(--cobre);
+  padding: 16pt 16pt 14pt 16pt;
+  background: linear-gradient(180deg, var(--card) 0%, #F8FAFC 100%);
+  height: 100%;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-glow);
+  position: relative;
+}
+
+.ref-panel::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 16pt;
+  right: 16pt;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(192,133,80,.15), transparent);
+}
+
+.small-label {
+  display: inline-block;
+  font-size: 8.5pt;
+  font-family: var(--fonte-sans);
+  color: var(--cobre-escuro);
+  text-transform: uppercase;
+  letter-spacing: 1.1pt;
+  font-weight: 700;
+  background: var(--cobre-label-bg-flat);
+  background-image: var(--cobre-label-bg);
+  padding: 2pt 6pt;
+  margin-bottom: 7pt;
+  border-radius: 2px;
+  border: 1px solid rgba(192,133,80,.12);
+}
+
+.meta-title {
+  font-size: 8.25pt;
+  font-family: var(--fonte-sans);
+  color: var(--texto-label);
+  text-transform: uppercase;
+  letter-spacing: 1pt;
+  font-weight: 600;
+  margin-bottom: 4pt;
+}
+
+.meta-value {
+  font-size: 17pt;
+  font-family: var(--fonte-serif);
+  color: var(--azul-profundo);
+  font-weight: 700;
+  margin-bottom: 10pt;
+  letter-spacing: -.1pt;
+}
+
+.meta-copy {
+  font-size: 10.25pt;
+  font-family: var(--fonte-serif);
+  color: var(--texto-suave);
+  line-height: 1.40;
+  margin-bottom: 10pt;
+}
+
+.meta-copy:last-child,
+.meta-value:last-child {
+  margin-bottom: 0;
+}
+
+/* ═══════════════════════════════════════════════════
+   PILLS — Tag row
+   ═══════════════════════════════════════════════════ */
+.pill-row {
+  display: flex;
+  justify-content: center;
+  gap: 10pt;
+  padding: 14pt var(--gap-xl);
+  border-bottom: 1px solid var(--card-borda);
+  background: linear-gradient(180deg, #FAFCFD 0%, white 100%);
+  animation: fadeInUp .6s ease-out .1s both;
+}
+
+.pill {
+  font-size: 8.8pt;
+  font-family: var(--fonte-sans);
+  color: var(--pill-texto);
+  border: 1px solid var(--pill-borda);
+  padding: 5pt 10pt;
+  background: var(--pill-bg);
+  letter-spacing: .25pt;
+  font-weight: 600;
+  white-space: nowrap;
+  border-radius: 2px;
+  box-shadow: 0 1px 2px rgba(0,0,0,.03);
+  transition: all .2s ease;
+}
+
+.pill:hover {
+  background: #E4F1F7;
+  border-color: var(--azul);
+  color: var(--azul-escuro);
+  box-shadow: 0 2px 6px rgba(43,143,175,.1);
+  transform: translateY(-1px);
+}
+
+/* ═══════════════════════════════════════════════════
+   BODY — Main content area
+   ═══════════════════════════════════════════════════ */
+.body-content {
+  padding: var(--gap-lg) var(--gap-xl) var(--gap-xl) var(--gap-xl);
+  animation: fadeInUp .65s ease-out .15s both;
+}
+
+/* Addressee + Object row */
+.addressee-row {
+  display: grid;
+  grid-template-columns: 33fr 67fr;
+  gap: 0 var(--gap-md);
+  margin-bottom: 18pt;
+}
+
+.addr-card {
+  border: 1px solid rgba(0,0,0,.06);
+  border-left: 3.5pt solid var(--azul);
+  padding: 14pt 16pt;
+  background: var(--card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-card);
+  transition: box-shadow .25s ease;
+}
+
+.addr-card:hover {
+  box-shadow: var(--shadow-elevated);
+}
+
+.addr-card__info {
+  font-size: 11.5pt;
+  line-height: 1.32;
+}
+
+.addr-card__info strong {
+  display: inline;
+  color: var(--azul-profundo);
+}
+
+.object-card {
+  border: 1px solid rgba(0,0,0,.06);
+  border-top: 3pt solid var(--azul);
+  padding: 13pt 15pt;
+  background: var(--card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-card);
+  transition: box-shadow .25s ease;
+}
+
+.object-card:hover {
+  box-shadow: var(--shadow-elevated);
+}
+
+.object-card__text {
+  font-size: 11pt;
+  font-family: var(--fonte-sans);
+  text-align: justify;
+  margin: 0;
+  line-height: 1.42;
+}
+
+/* Lead paragraph */
+.lead {
+  font-size: 13.2pt;
+  font-family: var(--fonte-serif);
+  color: #1E2D36;
+  line-height: 1.42;
+  text-align: justify;
+  margin-bottom: 16pt;
+}
+
+/* ═══════════════════════════════════════════════════
+   FEATURED BOX — "Pedido principal"
+   ═══════════════════════════════════════════════════ */
+.featured-box {
+  border: 1px solid rgba(27,106,132,.1);
+  border-top: 4pt solid var(--azul);
+  padding: 20pt 22pt 22pt 22pt;
+  background: linear-gradient(180deg, #F4FAFE 0%, #FBFDFE 40%, var(--card) 100%);
+  margin-top: 16pt;
+  margin-bottom: 14pt;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-featured);
+  position: relative;
+  overflow: hidden;
+}
+
+.featured-box::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background: radial-gradient(ellipse at 50% 0%, rgba(43,143,175,.04) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.featured-box__title {
+  font-size: 20pt;
+  font-family: var(--fonte-serif);
+  color: var(--azul-escuro);
+  font-weight: 700;
+  margin-bottom: 5pt;
+  position: relative;
+}
+
+.featured-box__micro {
+  font-size: 9.2pt;
+  font-family: var(--fonte-sans);
+  color: #5D6A73;
+  letter-spacing: .2pt;
+  line-height: 1.3;
+  margin-bottom: 14pt;
+  font-weight: 500;
+}
+
+.featured-box__quote {
+  font-size: 15.5pt;
+  line-height: 1.46;
+  color: var(--azul-profundo);
+  font-weight: 700;
+  text-align: justify;
+  margin: 0;
+  position: relative;
+  padding-left: 18pt;
+  border-left: 3pt solid var(--cobre-claro);
+}
+
+.featured-box__quote::before {
+  content: "\201C";
+  position: absolute;
+  left: -2pt;
+  top: -12pt;
+  font-size: 48pt;
+  font-family: var(--fonte-serif);
+  color: rgba(192,133,80,.18);
+  line-height: 1;
+  pointer-events: none;
+}
+
+/* ═══════════════════════════════════════════════════
+   CARDS — Triple column (Período / Base Legal / Compatibilização)
+   ═══════════════════════════════════════════════════ */
+.card-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 0;
+  margin-bottom: 20pt;
+}
+
+.card-row > .card:first-child  { margin-right: 8pt; }
+.card-row > .card:nth-child(2) { margin-left: 4pt; margin-right: 4pt; }
+.card-row > .card:last-child   { margin-left: 8pt; }
+
+.card {
+  border: 1px solid rgba(0,0,0,.06);
+  border-top: 3.5pt solid var(--cobre);
+  padding: 14pt;
+  background: var(--card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-card);
+  transition: box-shadow .25s ease, transform .25s ease;
+}
+
+.card:hover {
+  box-shadow: var(--shadow-elevated);
+  transform: translateY(-1px);
+}
+
+.card__value {
+  font-size: 16pt;
+  font-weight: 700;
+  margin-bottom: 6pt;
+  color: var(--azul-profundo);
+}
+
+.card__copy {
+  font-size: 11pt;
+  font-family: var(--fonte-serif);
+  color: var(--texto);
+  line-height: 1.36;
+  text-align: justify;
+}
+
+/* ═══════════════════════════════════════════════════
+   RATIONALE BOX — "Fundamentação"
+   ═══════════════════════════════════════════════════ */
+.rationale-box {
+  border: 1px solid rgba(27,106,132,.1);
+  border-top: 3.5pt solid var(--azul);
+  padding: 16pt 18pt;
+  margin-top: 16pt;
+  margin-bottom: 20pt;
+  background: linear-gradient(180deg, #F6FAFE 0%, var(--card) 100%);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-card);
+}
+
+.rationale-box__title {
+  font-size: 19pt;
+  font-family: var(--fonte-serif);
+  color: var(--azul-escuro);
+  font-weight: 700;
+  margin-bottom: 6pt;
+}
+
+.rationale-box__text {
+  text-align: justify;
+  margin: 0;
+  line-height: 1.32;
+}
+
+/* ═══════════════════════════════════════════════════
+   ARGUMENTS — Two-column section
+   ═══════════════════════════════════════════════════ */
+.arguments-row {
+  display: grid;
+  grid-template-columns: 54fr 46fr;
+  gap: 0 14pt;
+  margin-bottom: 22pt;
+}
+
+.arg-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 12pt;
+}
+
+.arg-card {
+  border: 1px solid rgba(0,0,0,.06);
+  border-top: 3.5pt solid var(--cobre);
+  padding: 15pt;
+  background: var(--card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-card);
+  transition: box-shadow .25s ease, transform .25s ease;
+}
+
+.arg-card:hover {
+  box-shadow: var(--shadow-elevated);
+  transform: translateY(-1px);
+}
+
+.arg-card--full {
+  flex: 1;
+}
+
+.arg-card__title {
+  font-size: 17pt;
+  font-family: var(--fonte-serif);
+  color: var(--texto);
+  font-weight: 700;
+  margin-bottom: 7pt;
+}
+
+.arg-card__text {
+  text-align: justify;
+  line-height: 1.32;
+  margin: 0;
+}
+
+.arg-card__text + .arg-card__text {
+  margin-top: 10.5pt;
+}
+
+/* ═══════════════════════════════════════════════════
+   CLOSING — Body paragraphs & signature
+   ═══════════════════════════════════════════════════ */
+.body-paragraph {
+  text-align: justify;
+  margin-bottom: 10pt;
+  line-height: 1.32;
+}
+
+.closing-line {
+  text-align: justify;
+  margin-bottom: 10pt;
+  line-height: 1.32;
+}
+
+/* ── Ornamental divider before signature ────── */
+.signature {
+  position: relative;
+  padding-top: 28pt;
+  margin-top: 30pt;
+  text-align: center;
+  border-top: none;
+}
+
+.signature::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 10%;
+  right: 10%;
+  height: 1px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    var(--borda-sutil) 15%,
+    var(--cobre-claro) 40%,
+    var(--cobre) 50%,
+    var(--cobre-claro) 60%,
+    var(--borda-sutil) 85%,
+    transparent 100%
+  );
+}
+
+.signature::after {
+  content: "⚖";
+  position: absolute;
+  top: -8pt;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 14pt;
+  color: var(--cobre);
+  background: white;
+  padding: 0 8pt;
+  line-height: 1;
+}
+
+.signature p {
+  margin-bottom: 6pt;
+  line-height: 1.36;
+  text-align: center;
+}
+
+.signature p:first-child {
+  font-size: 10.5pt;
+  color: var(--texto-suave);
+  margin-bottom: 14pt;
+}
+
+.signature p:nth-child(2) {
+  font-size: 14pt;
+  letter-spacing: .3pt;
+  color: var(--azul-profundo);
+}
+
+.signature p:nth-child(3) {
+  font-size: 10.5pt;
+  color: var(--texto-suave);
+  font-family: var(--fonte-sans);
+  font-weight: 500;
+}
+
+.signature p:last-child {
+  margin-bottom: 0;
+  font-size: 9.5pt;
+  font-family: var(--fonte-sans);
+  color: var(--texto-label);
+  font-weight: 600;
+  letter-spacing: .5pt;
+  text-transform: uppercase;
+}
+
+/* ═══════════════════════════════════════════════════
+   PRINT STYLES — Optimised for A4
+   ═══════════════════════════════════════════════════ */
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 72pt;
+  }
+
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  body {
+    background: white;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .document {
+    border: none;
+    box-shadow: none;
+  }
+
+  .ref-bar,
+  .panel,
+  .ref-panel,
+  .featured-box,
+  .card,
+  .rationale-box,
+  .arg-card,
+  .pill,
+  .small-label,
+  .addr-card,
+  .object-card {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    box-shadow: none;
+  }
+
+  .panel:hover,
+  .card:hover,
+  .arg-card:hover,
+  .pill:hover,
+  .addr-card:hover,
+  .object-card:hover {
+    transform: none;
+    box-shadow: none;
+  }
+
+  .featured-box,
+  .rationale-box {
+    page-break-inside: avoid;
+  }
+
+  .arguments-row {
+    page-break-inside: avoid;
+  }
+
+  .signature {
+    page-break-inside: avoid;
+  }
+
+  .signature::after {
+    background: white;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<article class="document" role="document">
+
+  <header class="ref-bar">
+    <span class="ref-bar__text">Referência: solicitação administrativa</span>
+  </header>
+
+  <section class="hero" aria-label="Cabeçalho do requerimento">
+
+    <div class="hero__main">
+      <div class="hero__title-block">
+        <p class="kicker">Requerimento Administrativo</p>
+        <h1 class="hero__title">Template de Solicitação Administrativa</h1>
+        <p class="hero__subtitle">Modelo reutilizável para pedidos administrativos objetivos, com estrutura pronta para adaptação por meio de campos substituíveis, mantendo organização, formalidade e leitura clara.</p>
+      </div>
+
+      <div class="hero__panels">
+        <div class="panel panel--azul">
+          <p class="panel__kicker">Instituição</p>
+          <p class="panel__accent">[ORGAO OU INSTITUICAO]</p>
+          <p class="panel__copy">Campo livre para identificar a unidade, entidade ou setor responsável pela análise do pedido.</p>
+        </div>
+        <div class="panel panel--cobre">
+          <p class="panel__kicker">Eixo do requerimento</p>
+          <p class="panel__accent">[TEMA CENTRAL DO PEDIDO]</p>
+          <p class="panel__copy">Resumo curto do objeto, como autorização, prorrogação, liberação, concessão, registro ou reconhecimento.</p>
+        </div>
+      </div>
+    </div>
+
+    <aside class="hero__sidebar">
+      <div class="ref-panel">
+        <p class="small-label">Painel de referência</p>
+
+        <p class="meta-title">Prazo ou período</p>
+        <p class="meta-value">[PRAZO, DATA OU INTERVALO]</p>
+
+        <p class="meta-title">Marco principal</p>
+        <p class="meta-copy">[DESCREVER O EVENTO, O INICIO DA VIGENCIA OU A DATA-CHAVE DO PEDIDO]</p>
+
+        <p class="meta-title">Base imediata</p>
+        <p class="meta-copy">[INDICAR ARTIGO, PORTARIA, RESOLUCAO, REGULAMENTO OU ATO APLICAVEL]</p>
+      </div>
+    </aside>
+
+  </section>
+
+  <nav class="pill-row" aria-label="Dados de referência rápida">
+    <span class="pill">[ORGAO OU INSTITUICAO]</span>
+    <span class="pill">[IDENTIFICACAO FUNCIONAL OU DOCUMENTAL]</span>
+    <span class="pill">[PERIODO, PRAZO OU PROTOCOLO]</span>
+  </nav>
+
+  <main class="body-content">
+
+    <div class="addressee-row">
+      <div class="addr-card">
+        <p class="small-label">Autoridade destinatária</p>
+        <p class="addr-card__info">
+          <strong>[TRATAMENTO FORMAL]</strong><br>
+          <strong>[NOME OU IDENTIFICADOR DO DESTINATARIO]</strong><br>
+          [CARGO, FUNCAO OU SETOR DESTINATARIO]<br>
+          [ORGAO DESTINATARIO]
+        </p>
+      </div>
+      <div class="object-card">
+        <p class="small-label">Síntese do objeto</p>
+        <p class="object-card__text"><strong>Assunto:</strong> requerimento de <strong>[DESCREVER O PEDIDO PRINCIPAL]</strong>, com referência a <strong>[PRAZO, CONDICAO OU PERIODO]</strong>, conforme os fundamentos e documentos indicados neste modelo.</p>
+      </div>
+    </div>
+
+    <p class="lead">[NOME DO REQUERENTE], [QUALIFICACAO FUNCIONAL OU IDENTIFICACAO], vinculado a [UNIDADE, SETOR OU INSTITUICAO], vem, respeitosamente, a presença de Vossa Senhoria, com fundamento em <strong>[BASE LEGAL, REGULAMENTAR OU ADMINISTRATIVA]</strong>, requerer <strong>[PROVIDENCIA PRETENDIDA]</strong>, na forma e nas condicoes descritas a seguir.</p>
+
+    <section class="featured-box" aria-label="Pedido principal">
+      <p class="small-label">Pedido principal</p>
+      <p class="featured-box__title">Síntese objetiva do pleito</p>
+      <p class="featured-box__micro">Trecho central do documento, pensado para leitura rápida e fácil adaptação.</p>
+      <p class="featured-box__quote">"[INSERIR A FRASE-CHAVE DO PEDIDO, COM A PROVIDENCIA EXATA QUE SE PRETENDE VER DEFERIDA]."</p>
+    </section>
+
+    <div class="card-row">
+      <div class="card">
+        <p class="small-label">Prazo ou alcance</p>
+        <p class="card__value">[DATA, INTERVALO OU EFEITO ESPERADO]</p>
+        <p class="card__copy">Indique aqui o periodo de vigencia, o marco temporal ou a extensao pratica da medida solicitada.</p>
+      </div>
+      <div class="card">
+        <p class="small-label">Base de apoio</p>
+        <p class="card__value">[ARTIGOS, ATOS OU REGRAS]</p>
+        <p class="card__copy">Resumo curto da norma, orientação interna ou fundamento administrativo que sustenta o requerimento.</p>
+      </div>
+      <div class="card">
+        <p class="small-label">Compatibilização</p>
+        <p class="card__value">[IMPACTO ADMINISTRATIVO]</p>
+        <p class="card__copy">Explique como o pedido pode ser atendido sem prejuizo relevante ao fluxo de trabalho, ao setor ou ao interesse institucional.</p>
+      </div>
+    </div>
+
+    <section class="rationale-box" aria-label="Fundamentação fático-jurídica">
+      <p class="small-label">Fundamentação fático-jurídica</p>
+      <p class="rationale-box__title">Lógica administrativa do pedido</p>
+      <p class="rationale-box__text">Este campo pode ser usado para demonstrar por que a providencia requerida é conveniente, regular, proporcional e compatível com as rotinas administrativas da unidade competente.</p>
+    </section>
+
+    <div class="arguments-row">
+      <div class="arg-stack">
+        <div class="arg-card">
+          <p class="small-label">I — Do contexto</p>
+          <p class="arg-card__title">Exposição do fato principal</p>
+          <p class="arg-card__text">Descreva aqui o contexto objetivo do requerimento, indicando o fato gerador, a necessidade prática e o motivo pelo qual a medida foi solicitada.</p>
+        </div>
+        <div class="arg-card">
+          <p class="small-label">II — Da necessidade</p>
+          <p class="arg-card__title">Justificativa específica</p>
+          <p class="arg-card__text">Explique por que o pedido é necessário no caso concreto, apontando elementos de utilidade, oportunidade, urgência moderada ou adequação administrativa.</p>
+        </div>
+      </div>
+      <div class="arg-stack">
+        <div class="arg-card arg-card--full">
+          <p class="small-label">III — Da coerência administrativa</p>
+          <p class="arg-card__title">Compatibilidade com a rotina institucional</p>
+          <p class="arg-card__text">Use este espaço para registrar que o pedido pode ser apreciado sem ruptura operacional relevante, bem como para mencionar precedentes, práticas administrativas ou critérios de tratamento uniforme, se existirem.</p>
+          <p class="arg-card__text">Caso não haja precedentes, este bloco também pode ser usado para reforçar a boa-fé, a organização prévia e a razoabilidade da medida pretendida.</p>
+        </div>
+      </div>
+    </div>
+
+    <p class="body-paragraph">Ressalta-se que a presente solicitação pode ser apresentada com a antecedência adequada, acompanhada dos documentos pertinentes e adaptada ao fluxo interno de análise, de modo a facilitar o exame regular pela autoridade competente.</p>
+
+    <p class="body-paragraph">Ante o exposto, <strong>requer o deferimento</strong> de <strong>[DESCREVER NOVAMENTE O PEDIDO]</strong>, nos termos da fundamentação acima exposta e da documentação eventualmente anexada.</p>
+
+    <p class="closing-line"><strong>Nestes termos, pede deferimento.</strong></p>
+
+    <footer class="signature">
+      <p>[LOCAL], <strong>[DATA]</strong>.</p>
+      <p><strong>[NOME DO REQUERENTE]</strong></p>
+      <p>[CARGO, FUNCAO OU QUALIFICACAO]</p>
+      <p>[IDENTIFICACAO COMPLEMENTAR]</p>
+    </footer>
+
+  </main>
+
+</article>
+
+</body>
+</html>
