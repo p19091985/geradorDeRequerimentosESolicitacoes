@@ -25,6 +25,18 @@ Concluido:
 - catalogo de templates em `template/catalogo_templates.json`;
 - validacao de existencia dos arquivos HTML declarados no catalogo;
 - seletor de template ao criar novo documento;
+- variaveis `{{campo}}` com formulario de preenchimento ao criar documento;
+- editor com busca, substituicao e autosave local;
+- metadados JSON locais por documento;
+- busca por nome, conteudo HTML e metadados;
+- filtro por status nas listas de documentos;
+- filtros por tipo e template;
+- manifesto JSON salvo junto aos arquivos finais em cada exportacao;
+- historico simples de versoes;
+- arquivamento local de documentos;
+- presets de exportacao e exportacao em lote;
+- prompt local opcional para revisao por IA externa;
+- roteiro/script inicial de empacotamento com PyInstaller;
 - template generico `template/template-abnt-monografia.html`;
 - `pyproject.toml` com configuracao inicial do Ruff;
 - testes unitarios para catalogo, paths e storage;
@@ -34,10 +46,9 @@ Concluido:
 Ainda pendente:
 
 - extrair a interface PySide6 para um pacote `app/`;
-- implementar variaveis preenchiveis em templates;
-- melhorar editor, preview e UX;
-- adicionar metadados, busca e historico;
-- fortalecer automacao, empacotamento e recursos opcionais com IA.
+- ampliar editor, preview e UX;
+- adicionar documentos recentes, restauracao visual de arquivados e validacoes de renderizacao;
+- fortalecer automacao e empacotamento final.
 
 ## Principios
 
@@ -122,11 +133,11 @@ Exemplos de variaveis:
 
 Entregaveis:
 
-- definir sintaxe simples de variaveis;
-- detectar variaveis presentes no template;
-- exibir formulario para preenchimento;
-- renderizar HTML final preenchido;
-- manter opcao de editar o HTML depois da geracao.
+- [x] definir sintaxe simples de variaveis;
+- [x] detectar variaveis presentes no template;
+- [x] exibir formulario para preenchimento;
+- [x] renderizar HTML final preenchido;
+- [x] manter opcao de editar o HTML depois da geracao.
 
 Prioridade: alta.
 
@@ -136,13 +147,13 @@ Melhorar o editor para tornar o trabalho diario mais rapido e seguro.
 
 Entregaveis:
 
-- autosave com indicador de estado;
-- busca e substituicao;
-- formatacao de HTML;
-- validacao basica de HTML e CSS;
-- snippets para secoes comuns;
-- historico simples de versoes;
-- alerta para documento nao salvo antes de fechar.
+- [x] autosave com indicador de estado;
+- [x] busca e substituicao;
+- [ ] formatacao de HTML;
+- [ ] validacao basica de HTML e CSS;
+- [ ] snippets para secoes comuns;
+- [x] historico simples de versoes;
+- [ ] alerta para documento nao salvo antes de fechar.
 
 Prioridade: media.
 
@@ -169,14 +180,14 @@ Tornar a exportacao mais previsivel, auditavel e flexivel.
 
 Entregaveis:
 
-- presets de qualidade: rascunho, normal, alta resolucao e arquivo leve;
-- exportacao em lote;
-- fila de exportacao com progresso;
-- logs tecnicos por exportacao;
-- deteccao de paginas cortadas;
-- pre-validacao de tamanho A4;
-- compactacao opcional de PDF;
-- manifesto de geracao salvo junto aos arquivos finais.
+- [x] presets de qualidade: rascunho, normal, alta resolucao e arquivo leve;
+- [x] exportacao em lote;
+- [ ] fila de exportacao com progresso;
+- [x] logs tecnicos por exportacao;
+- [ ] deteccao de paginas cortadas;
+- [ ] pre-validacao de tamanho A4;
+- [ ] compactacao opcional de PDF;
+- [x] manifesto de geracao salvo junto aos arquivos finais.
 
 Exemplo de manifesto:
 
@@ -208,11 +219,12 @@ Metadados sugeridos:
 
 Entregaveis:
 
-- arquivo de metadados por documento;
-- busca por nome e conteudo;
-- filtros por tipo, status e template;
-- lista de documentos recentes;
-- opcao de arquivar documentos antigos.
+- [x] arquivo de metadados por documento;
+- [x] busca por nome, conteudo e metadados;
+- [x] filtros por tipo e template;
+- [x] filtro por status;
+- [ ] lista de documentos recentes;
+- [x] opcao de arquivar documentos antigos.
 
 Prioridade: media.
 
@@ -238,13 +250,13 @@ Adicionar IA como recurso opcional, com transparencia e controle do usuario.
 
 Possibilidades:
 
-- gerar minuta de requerimento a partir de dados informados;
-- revisar linguagem formal;
-- adaptar tom para texto juridico, administrativo ou academico;
-- extrair dados de PDFs de apoio;
-- sugerir fundamentacao com base em arquivos locais;
-- resumir documentos finalizados;
-- comparar versoes de documentos.
+- [ ] gerar minuta de requerimento a partir de dados informados;
+- [x] revisar linguagem formal via prompt local opcional;
+- [x] adaptar tom para texto juridico, administrativo ou academico via prompt local;
+- [ ] extrair dados de PDFs de apoio;
+- [ ] sugerir fundamentacao com base em arquivos locais;
+- [ ] resumir documentos finalizados;
+- [ ] comparar versoes de documentos.
 
 Cuidados:
 
@@ -261,14 +273,14 @@ Preparar o sistema para uso mais amplo.
 
 Entregaveis:
 
-- AppImage ou pacote equivalente para Linux;
-- instalador Windows;
-- icone e identidade visual do app;
-- versionamento interno;
-- pasta de dados do usuario fora do codigo-fonte;
-- backup automatico;
-- migracoes de configuracao;
-- documentacao de instalacao e recuperacao.
+- [ ] AppImage ou pacote equivalente para Linux;
+- [ ] instalador Windows;
+- [ ] icone e identidade visual do app;
+- [x] versionamento interno inicial em `pyproject.toml`;
+- [ ] pasta de dados do usuario fora do codigo-fonte;
+- [ ] backup automatico;
+- [ ] migracoes de configuracao;
+- [x] documentacao/script inicial de empacotamento em `empacotamento/`.
 
 Prioridade: futura.
 

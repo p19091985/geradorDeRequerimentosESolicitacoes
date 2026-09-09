@@ -20,7 +20,22 @@
       "nome": "Template ABNT - Monografia",
       "categoria": "Academico",
       "arquivo": "template-abnt-monografia.html",
-      "descricao": "Modelo generico com capa, folha de rosto, sumario e estrutura de monografia ABNT."
+      "descricao": "Modelo generico com capa, folha de rosto, sumario e estrutura de monografia ABNT.",
+      "variaveis": [
+        "instituicao",
+        "curso",
+        "departamento",
+        "autor",
+        "titulo",
+        "cidade_uf",
+        "ano",
+        "requisito",
+        "titulo_obtido",
+        "area_concentracao",
+        "orientador",
+        "coorientador",
+        "dedicatoria"
+      ]
     }
   ]
 }

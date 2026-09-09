@@ -294,43 +294,43 @@
 
 <section class="page cover">
   <div class="cover__top">
-    [NOME DA INSTITUIÇÃO]<br>
-    [NOME DO CURSO]<br>
-    [DEPARTAMENTO, DISCIPLINA OU LINHA DE PESQUISA]
+    {{instituicao}}<br>
+    {{curso}}<br>
+    {{departamento}}
   </div>
 
   <div class="cover__title">
-    [NOME DO AUTOR]<br><br>
-    [TÍTULO DA MONOGRAFIA: SUBTÍTULO, SE HOUVER]
+    {{autor}}<br><br>
+    {{titulo}}
   </div>
 
   <div class="cover__bottom">
-    [CIDADE/UF]<br>
-    [ANO]
+    {{cidade_uf}}<br>
+    {{ano}}
   </div>
 </section>
 
 <section class="page title-page">
-  <div class="title-page__author">[NOME DO AUTOR]</div>
+  <div class="title-page__author">{{autor}}</div>
 
   <div class="title-page__title">
-    [TÍTULO DA MONOGRAFIA: SUBTÍTULO, SE HOUVER]
+    {{titulo}}
   </div>
 
   <p class="title-page__note">
-    Monografia apresentada ao [nome do curso] da [nome da instituição], como requisito
-    [parcial ou total] para obtenção do título de [grau ou formação]. Área de concentração:
-    [área de concentração].
+    Monografia apresentada ao {{curso}} da {{instituicao}}, como requisito
+    {{requisito}} para obtenção do título de {{titulo_obtido}}. Área de concentração:
+    {{area_concentracao}}.
   </p>
 
   <p class="title-page__advisor">
-    Orientador(a): [Nome do(a) orientador(a)].<br>
-    Coorientador(a): [Nome do(a) coorientador(a), se houver].
+    Orientador(a): {{orientador}}.<br>
+    Coorientador(a): {{coorientador}}.
   </p>
 
   <div class="title-page__bottom">
-    [CIDADE/UF]<br>
-    [ANO]
+    {{cidade_uf}}<br>
+    {{ano}}
   </div>
 </section>
 
@@ -338,8 +338,7 @@
   <h1>Dedicatória</h1>
 
   <p class="dedication__text">
-    [Texto opcional de dedicatória. Remova esta página caso ela não seja necessária
-    para a versão final do trabalho.]
+    {{dedicatoria}}
   </p>
 </section>
 
@@ -360,7 +359,7 @@
 
 <section class="page content-page">
 
-<h1>[TÍTULO DA MONOGRAFIA]</h1>
+<h1>{{titulo}}</h1>
 
 <h2 id="introducao">1. Introdução</h2>
 

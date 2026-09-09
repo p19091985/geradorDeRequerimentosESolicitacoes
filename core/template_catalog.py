@@ -36,6 +36,7 @@ class TemplateDefinition:
     arquivo: str
     descricao: str = ""
     padrao: bool = False
+    variaveis: tuple[str, ...] = ()
 
     def resolve_path(self, root_dir: Path | None = None) -> Path:
         root = (root_dir or Path.cwd()).resolve()
@@ -64,6 +65,7 @@ def _record_to_template(record: dict[str, Any]) -> TemplateDefinition:
         arquivo=str(record["arquivo"]).strip(),
         descricao=str(record.get("descricao", "")).strip(),
         padrao=bool(record.get("padrao", False)),
+        variaveis=tuple(str(name).strip() for name in record.get("variaveis", []) if str(name).strip()),
     )
 
 
@@ -135,6 +137,16 @@ def _fallback_templates(root_dir: Path) -> list[TemplateDefinition]:
             categoria="Academico",
             arquivo="template-abnt-monografia.html",
             descricao="Modelo generico de monografia em formato ABNT.",
+            variaveis=(
+                "instituicao",
+                "curso",
+                "departamento",
+                "autor",
+                "titulo",
+                "cidade_uf",
+                "ano",
+                "orientador",
+            ),
         ),
     ]
     return [

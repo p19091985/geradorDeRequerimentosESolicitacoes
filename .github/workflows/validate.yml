@@ -27,16 +27,23 @@ jobs:
           python -m py_compile \
             ttk_pdf_generator.py \
             capture_html_screenshot.py \
+            ai/*.py \
             core/*.py \
+            empacotamento/*.py \
             rendering/*.py \
             storage/*.py \
             test_capture_html_screenshot.py \
             test_core_storage.py \
-            test_template_catalog.py
+            test_document_archive_history.py \
+            test_document_metadata.py \
+            test_export_manifest.py \
+            test_optional_ai_and_presets.py \
+            test_template_catalog.py \
+            test_template_variables.py
 
       - name: Run fast unit tests
         run: |
-          python -m unittest test_core_storage.py test_template_catalog.py
+          python -m unittest test_core_storage.py test_document_archive_history.py test_document_metadata.py test_export_manifest.py test_optional_ai_and_presets.py test_template_catalog.py test_template_variables.py
 
       - name: Validate shell script
         run: bash -n iniciar.sh

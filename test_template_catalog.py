@@ -41,8 +41,36 @@ class TemplateCatalogTests(unittest.TestCase):
 
             self.assertEqual(len(templates), 1)
             self.assertEqual(templates[0].id, "modelo")
+            self.assertEqual(templates[0].variaveis, ())
             self.assertEqual(load_default_template_path(root), template_dir / "modelo.html")
             self.assertEqual(load_template_content(templates[0], root), "<h1>Modelo</h1>")
+
+    def test_load_template_catalog_reads_declared_variables(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            template_dir = root / "template"
+            template_dir.mkdir()
+            (template_dir / "modelo.html").write_text("<h1>{{titulo}}</h1>", encoding="utf-8")
+            (template_dir / "catalogo_templates.json").write_text(
+                json.dumps(
+                    {
+                        "templates": [
+                            {
+                                "id": "modelo",
+                                "nome": "Modelo Teste",
+                                "categoria": "Teste",
+                                "arquivo": "modelo.html",
+                                "variaveis": ["titulo", "autor"],
+                            }
+                        ]
+                    }
+                ),
+                encoding="utf-8",
+            )
+
+            templates = load_template_catalog(root)
+
+            self.assertEqual(templates[0].variaveis, ("titulo", "autor"))
 
     def test_load_template_catalog_reports_missing_template_file(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
